@@ -1,7 +1,7 @@
 
 import dotenv from "dotenv";
 
-import Server from "./modules/server.js";
+import Server from "./models/server.js";
 
 dotenv.config();
 

@@ -43,6 +43,9 @@ UserSchema.methods.toJSON = function () {
     const {__v, password, ...user} = this.toObject();
     return user
 }
+UserSchema.methods.comparePass = async function (passForm) {
+    return await bcrypt.compare(passForm,this.password)
+}
 
  export default model('Users', UserSchema);
 

@@ -1,13 +1,13 @@
 import { request, response } from "express";
-import { jwtGenerator } from "../helpers/jwtGenerator.js";
+import  jwtGenerator from "../helpers/jwtGenerator.js";
 
 import Users from "../models/userModel.js";
 
 const login = async (req = request , res = response) => {
-    const {email, password, _id} = req.body;
-
-    const user = await Users.findOne({email});
+    const {email, password,} = req.body;
     
+    const user = await Users.findOne({email});
+
     if (!user) {
         return res.status(403).json({mgs:'User is not registered or invalid'});
     }
@@ -19,8 +19,11 @@ const login = async (req = request , res = response) => {
     
     try {
         if (await user.comparePass(password)) {
-            const token = await jwtGenerator(_id)
-            res.json({email, token})          
+            
+            res.json({
+                email,
+                token: jwtGenerator(user._id)
+            })          
         }else{
             return res.status(403).json({mgs:'Password invalid'});
             

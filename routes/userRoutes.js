@@ -11,6 +11,8 @@ import { register,
          } from "../controllers/userController.js";
 
 import { checkForm } from "../middleware/checkForm.js";
+import validateJWT from "../middleware/validateJWT.js";
+import { adminRole,haveRole } from "../middleware/roleCompare.js";
 
 
 const router = Router();
@@ -32,6 +34,9 @@ router.put('/:_id',[
 router.get('/',getUsers);
 
 router.delete('/:_id',[
+    validateJWT,
+    haveRole('ADMINm_ROLE','otro_ROLE'),
+    // adminRole,
     check('_id','Id is not mongoId').isMongoId(),
     check('_id').custom(validateUserId),
     checkForm

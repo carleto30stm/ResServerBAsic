@@ -40,7 +40,8 @@ UserSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, salt)
 })
 UserSchema.methods.toJSON = function () {
-    const {__v, password, ...user} = this.toObject();
+    const {__v, password,_id, ...user} = this.toObject();
+    user.uid = _id;
     return user
 }
 UserSchema.methods.comparePass = async function (passForm) {

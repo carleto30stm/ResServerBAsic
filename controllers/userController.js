@@ -50,11 +50,12 @@ const getUsers = async (req = Request, res = Response) => {
   }
 };
 
-const deleteUser = async (req = Request , res = Response)=>{
+const deleteUser = async (req = request , res = response)=>{
     const {_id} = req.params;
+    const userAuth = req.userAuth
     try {
         const user = await Users.findByIdAndUpdate(_id,{active:false});
-        res.json(user)
+        res.json({user,userAuth})
     } catch (error) {
         console.log(error);
     } 
